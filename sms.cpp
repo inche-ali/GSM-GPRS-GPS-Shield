@@ -245,6 +245,7 @@ Method reads SMS from specified memory(SIM) position
 position:     SMS position <1..20>
 phone_number: a pointer where the phone number string of received SMS will be placed
               so the space for the phone number string must be reserved - see example
+max phone_num_length: maximum length of phone number string
 SMS_text  :   a pointer where SMS text will be placed
 max_SMS_len:  maximum length of SMS text excluding also string terminating 0x00 character
 
@@ -272,7 +273,7 @@ an example of usage:
         position = gsm.IsSMSPresent(SMS_UNREAD);
         if (position) {
           // there is new SMS => read it
-          gsm.GetSMS(position, phone_num, sms_text, 100);
+          gsm.GetSMS(position, phone_num, 20, sms_text, 100);
           #ifdef DEBUG_PRINT
             gsm.DebugPrint("DEBUG SMS phone number: ", 0);
             gsm.DebugPrint(phone_num, 0);
@@ -413,6 +414,7 @@ is returned
 position:     SMS position to be read <1..20>
 phone_number: a pointer where the tel. number string of received SMS will be placed
               so the space for the phone number string must be reserved - see example
+max phone_num_length: maximum length of phone number string
 SMS_text  :   a pointer where SMS text will be placed
 max_SMS_len:  maximum length of SMS text excluding terminating 0x00 character
 
@@ -458,7 +460,7 @@ an example of usage:
         }
 
         // don't authorize SMS with SIM phonebook at all
-        if (GETSMS_AUTH_SMS == gsm.GetAuthorizedSMS(1, phone_num, sms_text, 100, 0, 0)) {
+        if (GETSMS_AUTH_SMS == gsm.GetAuthorizedSMS(1, phone_num, 20,sms_text, 100, 0, 0)) {
           // new SMS was detected at the SMS position 1
           // because authorization was not required
           // SMS is considered authorized
